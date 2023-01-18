@@ -197,6 +197,23 @@ Résultat :
 
 ### 4. Question bonus (choix entre data visualisation et/ou machine Learning)
 #### 4.1 Data Visualisation : Etablissez un Sunburst permettant de tracer un échantillon de parcours convertis.
+Afin de créer un diagramme Sunburst, on doit procéder de la manière suivante :
+##### 1. Reconstituer le dataset afin d'obtenir les différents parcours convertis et le nombre associé
+La requête permettant d'extraire ce format de données est le suivant:
+```
+select full_journey,count(*) as nb_parcours
+from(
+  select visitor_id,
+  order_id,
+  date,
+  array_to_string(array_agg(channel order by timestamp), '-') as full_journey
+  from p-assessment.id001.logs_extract a
+  group by 1,2,3
+) tab
+group by 1
+```
+##### 2. Extraction des résultats dans un fichier .csv
+##### 3. Construction du Sunburst en utilisant R
 #### 4.2 Machine Learning
 Etablissez un modèle data Driven pour calculer la contribution des différents leviers à la conversion. Expliquer la démarche.
 Indication un modèle data Driven permet de prendre en compte l’ensemble des leviers participant à une conversion à l’instar du modèle last touch qui prend en compte que la dernière touche.
