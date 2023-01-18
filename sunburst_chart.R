@@ -11,4 +11,4 @@ path_data <- read.csv(
 df <- path_data[c('full_journey','nb_parcours')]
 
 #create sunburst visualisation
-sunburst(df,width='100%', height=600, legend = F)
+sunburst(df,percent=TRUE,count=TRUE)
