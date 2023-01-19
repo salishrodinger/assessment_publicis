@@ -153,7 +153,7 @@ from (
     order_id,
     date,
     device, 
-    array_to_string(array_agg(channel order by timestamp), ' > ') as channel_combination
+    array_to_string(array_agg(channel order by timestamp), '-') as channel_combination
   from subquery
   group by 1,2,3,4
 ) tab
@@ -177,23 +177,23 @@ limit 15
 
 Résultat :
 
-|top	|desktop	|mobile|
-| --- | --- | --- |
-|1|	SEO|	SEO|
-|2|	DIRECT_ACCESS|	DIRECT_ACCESS|
-|3|	SEA_Google_M|	AD_EXCHANGE_appnexus > SEO|
-|4|	AD_EXCHANGE_appnexus|	SEA_Google_M|
-|5|	AD_EXCHANGE_appnexus > SEO|	email_auto > DIRECT_ACCESS|
-|6|	AD_EXCHANGE_appnexus > DIRECT_ACCESS|	SEO > DIRECT_ACCESS|
-|7|	AFFILIATION > REFERRAL|	DIRECT_ACCESS > SEO|
-|8|	email_auto > DIRECT_ACCESS|	AD_EXCHANGE_appnexus > DIRECT_ACCESS|
-|9|	SEA_Bing_M|	AD_EXCHANGE_appnexus|
-|10|	SEO > DIRECT_ACCESS	|email_auto|
-|11	|REFERRAL|	SEO > AD_EXCHANGE_appnexus|
-|12	|DIRECT_ACCESS > SEO|	DIRECT_ACCESS > email_auto|
-|13	|email_auto	|SEO > AD_EXCHANGE_appnexus > DIRECT_ACCESS|
-|14|	AFFILIATION|	SEO > email_auto > DIRECT_ACCESS|
-|15|	email_auto > SEO|	REFERRAL|
+|top|desktop|mobile|
+|---|---|---|
+|1|SEO|SEO|
+|2|DIRECT_ACCESS|DIRECT_ACCESS|
+|3|SEA_Google_M|AD_EXCHANGE_appnexus-SEO|
+|4|AD_EXCHANGE_appnexus|SEA_Google_M|
+|5|AD_EXCHANGE_appnexus-SEO|email_auto-DIRECT_ACCESS|
+|6|AD_EXCHANGE_appnexus-DIRECT_ACCESS|SEO-DIRECT_ACCESS|
+|7|AFFILIATION-REFERRAL|DIRECT_ACCESS-SEO|
+|8|email_auto-DIRECT_ACCESS|AD_EXCHANGE_appnexus-DIRECT_ACCESS|
+|9|SEA_Bing_M|AD_EXCHANGE_appnexus|
+|10|SEO-DIRECT_ACCESS|email_auto|
+|11|REFERRAL|SEO-AD_EXCHANGE_appnexus|
+|12|DIRECT_ACCESS-SEO|DIRECT_ACCESS-email_auto|
+|13|email_auto|SEO-AD_EXCHANGE_appnexus-DIRECT_ACCESS|
+|14|AFFILIATION|SEO-email_auto-DIRECT_ACCESS|
+|15|email_auto-SEO|REFERRAL|
 
 ### 4. Question bonus (choix entre data visualisation et/ou machine Learning)
 #### 4.1 Data Visualisation : Etablissez un Sunburst permettant de tracer un échantillon de parcours convertis.
@@ -240,5 +240,5 @@ J'ai choisi d'utiliser la solution de répartitions des gains de Shapley. Dans l
 
 Ci-dessous, le résultat graphique obtenu en se basant sur les données à disposition, le notebook permettant de calculer la valeur de Shapley est disponible [ici](data-driven_attribution_model_Shapley.ipynb)
 
-![image](https://user-images.githubusercontent.com/86535632/213578591-5ae41062-6050-4f48-a423-42543601f211.png)
+![image](https://user-images.githubusercontent.com/86535632/213581844-31689ce8-4421-448a-922b-4e209c1c76c2.png)
 
