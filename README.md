@@ -240,5 +240,5 @@ J'ai choisi d'utiliser la solution de répartitions des gains de Shapley. Dans l
 
 Ci-dessous, le résultat graphique obtenu en se basant sur les données à disposition, le notebook permettant de calculer la valeur de Shapley est disponible [ici](data-driven_attribution_model_Shapley.ipynb)
 
-![image](https://user-images.githubusercontent.com/86535632/213577052-4df58729-c0b5-4ad1-8553-5b6d0dc97ae8.png)
+![image](https://user-images.githubusercontent.com/86535632/213578591-5ae41062-6050-4f48-a423-42543601f211.png)
 
