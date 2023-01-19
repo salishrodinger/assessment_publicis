@@ -235,3 +235,10 @@ Le Sunburst des parcours convertis a été créé en utilisant la librairie __Su
 #### 4.2 Machine Learning
 Etablissez un modèle data Driven pour calculer la contribution des différents leviers à la conversion. Expliquer la démarche.
 Indication un modèle data Driven permet de prendre en compte l’ensemble des leviers participant à une conversion à l’instar du modèle last touch qui prend en compte que la dernière touche.
+
+J'ai choisi d'utiliser la solution de répartitions des gains de Shapley. Dans la théorie des jeux, la valeur de Shapley est un concept de solution permettant de répartir équitablement les gains et les coûts entre plusieurs acteurs (ici `channel`) travaillant en coalition. Celle-ci s'applique principalement dans les situations où les contributions de chaque acteur sont inégales, mais où ils travaillent en coopération les uns avec les autres pour obtenir un gain (= conversion). Les joueurs ici sont représentés par les canaux markéting (`SEO`, `DIRECT ACCESS` etc..) et chacun d'entre eux peut être considéré comme travaillant en synergie (formation d'une __coalition__) afin de générer des __conversions__. En d'autres termes, cette approche attribue équitablement la contribution de chaque touch point à la conversion.
+
+Ci-dessous, le résultat graphique obtenu en se basant sur les données à disposition, le notebook permettant de calculer la valeur de Shapley est disponible [ici](data-driven_attribution_model_Shapley.ipynb)
+
+![image](https://user-images.githubusercontent.com/86535632/213490116-a5f510da-14ee-4b14-9efa-f07b03acb208.png)
+
