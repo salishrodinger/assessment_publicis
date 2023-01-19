@@ -198,7 +198,7 @@ Résultat :
 ### 4. Question bonus (choix entre data visualisation et/ou machine Learning)
 #### 4.1 Data Visualisation : Etablissez un Sunburst permettant de tracer un échantillon de parcours convertis.
 Afin de créer un diagramme Sunburst, on doit procéder de la manière suivante :
-##### 1. Reconstition du dataset afin d'obtenir les différents parcours convertis et leurs nombres associés
+##### 4.1.1. Reconstition du dataset afin d'obtenir les différents parcours convertis et leurs nombres associés
 Il y a eu un parti pris de ne pas représenter un parcours avec les duplications consécutives de clics pour un même levier (`channel`), dû à un défaut de mémoire + des combinaisons > à 54 touchpoints sur le diagramme ce qui rendait ce dernier illisible. Pour ce faire, lorsque plusieurs clics consécutifs sont effectués sur un même levier marketing, celui-ci n'est représenté qu'une seule fois dans le parcours. 
 
 La requête permettant d'extraire ce format de données est le suivant:
@@ -223,8 +223,13 @@ from(
 group by 1
 order by 2 desc
 ```
-##### 2. Extraction des résultats dans un fichier .csv
-##### 3. Construction du Sunburst en utilisant R
+###### 4.1.2. Extraction des résultats dans un fichier .csv
+###### 4.1.3. Construction du diagramme Sunburst
+Le Sunburst des parcours convertis a été créé en utilisant R Studio en téléchargeant la librairie __SunburstR__, le script est disponible [ici](sunburst_chart.R) et le sunburst résultant : [ici](test_publicis_sunburst_chart_using_R.html).
+<br>
+<br>
+<img width="542" alt="Capture d’écran 2023-01-19 à 01 13 01" src="https://user-images.githubusercontent.com/86535632/213325552-8f8effb3-064a-4ea6-b5e5-f34e68f7e77e.png">
+
 #### 4.2 Machine Learning
 Etablissez un modèle data Driven pour calculer la contribution des différents leviers à la conversion. Expliquer la démarche.
 Indication un modèle data Driven permet de prendre en compte l’ensemble des leviers participant à une conversion à l’instar du modèle last touch qui prend en compte que la dernière touche.
