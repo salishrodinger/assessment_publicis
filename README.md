@@ -198,19 +198,30 @@ Résultat :
 ### 4. Question bonus (choix entre data visualisation et/ou machine Learning)
 #### 4.1 Data Visualisation : Etablissez un Sunburst permettant de tracer un échantillon de parcours convertis.
 Afin de créer un diagramme Sunburst, on doit procéder de la manière suivante :
-##### 1. Reconstituer le dataset afin d'obtenir les différents parcours convertis et le nombre associé
+##### 1. Reconstition du dataset afin d'obtenir les différents parcours convertis et leurs nombres associés
+Il y a eu un parti pris de ne pas représenter un parcours avec les duplications consécutives de clics pour un même levier (`channel`), dû à un défaut de mémoire + des combinaisons > à 54 touchpoints sur le diagramme ce qui rendait ce dernier illisible. Pour ce faire, lorsque plusieurs clics consécutifs sont effectués sur un même levier marketing, celui-ci n'est représenté qu'une seule fois dans le parcours. 
+
 La requête permettant d'extraire ce format de données est le suivant:
 ```
 select full_journey,count(*) as nb_parcours
 from(
-  select visitor_id,
-  order_id,
-  date,
-  array_to_string(array_agg(channel order by timestamp), '-') as full_journey
-  from p-assessment.id001.logs_extract a
+  select visitor_id
+  ,order_id
+  ,date
+  ,array_to_string(array_agg(channel order by timestamp), '-') as full_journey
+  from(
+    select tab.*
+    from (
+      select a.*,
+      lag(channel) over (partition by visitor_id, order_id, date order by timestamp) as previous_channel, /* supression unique des doublons consécutifs */
+      from p-assessment.id001.logs_extract a
+    )tab
+    where (channel <> previous_channel or previous_channel is null)
+  ) tab1
   group by 1,2,3
-) tab
+) tab2
 group by 1
+order by 2 desc
 ```
 ##### 2. Extraction des résultats dans un fichier .csv
 ##### 3. Construction du Sunburst en utilisant R
