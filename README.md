@@ -201,7 +201,7 @@ Afin de créer un diagramme Sunburst, on doit procéder de la manière suivante 
 ##### 4.1.1. Reconstition du dataset afin d'obtenir les différents parcours convertis et leurs nombres associés
 Il y a eu un parti pris de ne pas représenter un parcours avec les duplications consécutives de clics pour un même levier (`channel`), dû à un défaut de mémoire + des combinaisons > à 54 touchpoints sur le diagramme ce qui rendait ce dernier illisible. Pour ce faire, lorsque plusieurs clics consécutifs sont effectués sur un même levier marketing, celui-ci n'est représenté qu'une seule fois dans le parcours. 
 
-La requête permettant d'extraire ce format de données est le suivant:
+La requête permettant d'extraire ce schéma est le suivant :
 ```
 select full_journey,count(*) as nb_parcours
 from(
@@ -224,8 +224,10 @@ group by 1
 order by 2 desc
 ```
 ###### 4.1.2. Extraction des résultats dans un fichier .csv
+
+Le résultat de la requête ci-dessus a été exportée en un [fichier .csv](bquxjob_3d9765be_185c749b3cc.csv).
 ###### 4.1.3. Construction du diagramme Sunburst
-Le Sunburst des parcours convertis a été créé en utilisant R Studio en téléchargeant la librairie __SunburstR__, le script est disponible [ici](sunburst_chart.R) et le sunburst résultant : [ici](test_publicis_sunburst_chart_using_R.html).
+Le Sunburst des parcours convertis a été créé en utilisant la librairie __SunburstR__ disponible dans R Studio, le script permettant de créer le diagramme est disponible [ici](sunburst_chart.R) et le résultat : [ici](test_publicis_sunburst_chart_using_R.html).
 <br>
 <br>
 <img width="542" alt="Capture d’écran 2023-01-19 à 01 13 01" src="https://user-images.githubusercontent.com/86535632/213325552-8f8effb3-064a-4ea6-b5e5-f34e68f7e77e.png">
