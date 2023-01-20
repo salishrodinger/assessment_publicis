@@ -9,7 +9,7 @@ Pour les besoins du test, les données ont été insérées dans une table GCP a
 - Je pars du principe qu'un parcours converti est représenté par la triple combinaison `visitor_id`, `order_id`, et `date`. Même si dans le dataset partagé, l'indicateur `date` se suffit à lui seul.
 - En analysant le dataset, seuls les parcours convertis sont remontés (le champ `date` réprésentant la date d'achat est mentionné sur toutes les lignes du ds.)
 
-```
+```sql
 with last_touch_attribution as (
 select case when device in ('web','tablet') then 'desktop' else device end as device,channel,count(*) as lt_att
 from p-assessment.id001.logs_extract
@@ -56,7 +56,7 @@ On peut en déduire qu'en utilisant le modèle d'attribution last-touch, la majo
 ### 2.1 Calculer pour les parcours mono et multileviers :
 #### 2.1.1 pourcentage de conversion mono levier & multi leviers
 
-```
+```sql
 select round(sum(case when cnt_channels > 1 then 1 else 0 end) / count(*) *100) as conversion_multilev,
 round(sum(case when cnt_channels = 1 then 1 else 0 end) / count(*) *100) as conversion_mono_lev,
 count(*) as total_parcours
@@ -87,7 +87,7 @@ Sur __14 021 parcours__, __37%__ sont des parcours multi leviers, __63%__ sont d
 
 #### 2.1.2 nombre médian / moyen de touches avant la conversion
 
-```
+```sql
 SELECT round(avg(nb_touches_par_parcours)) as nb_moy_touches
 FROM(
   SELECT visitor_id,order_id,date, max(rnk) as nb_touches_par_parcours
@@ -109,7 +109,7 @@ Il faut en moyenne __4 touches__ avant une conversion.
 
 #### 2.1.3 nombre moyenne de jours avant la conversion
 
-```
+```sql
 select round(avg(datediff)) as nb_moy_j_avt_conversion
 from(
   select visitor_id,order_id,date, date_diff(tab.max_date, tab.min_date, day)+1 as datediff
@@ -133,7 +133,7 @@ Il faut en moyenne __6 jours__ pour qu'une conversion ait lieu.
 
 ### 3. Calculer les Top 10 /15 combinaisons des leviers : synergies remarquables : mobile vs desktop
 
-```
+```sql
 with subquery as (
     SELECT visitor_id, 
         order_id,
@@ -202,7 +202,7 @@ Afin de créer un diagramme Sunburst, on doit procéder de la manière suivante 
 Il y a eu un parti pris de ne pas représenter un parcours avec les duplications consécutives de clics pour un même levier (`channel`), dû à un défaut de mémoire + des combinaisons > à 54 touchpoints sur le diagramme ce qui rendait ce dernier illisible. Pour ce faire, lorsque plusieurs clics consécutifs sont effectués sur un même levier marketing, celui-ci n'est représenté qu'une seule fois dans le parcours. 
 
 La requête permettant d'extraire ce schéma est le suivant :
-```
+```sql
 select full_journey,count(*) as nb_parcours
 from(
   select visitor_id
